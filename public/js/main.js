@@ -24,6 +24,7 @@ function updateCarousel() {
 	var maxDist = centreX;
 	var items = $('#home-carousel .active');
 	$.each(items, function (i, obj) {
+		return; // TODO
 		obj = $(obj);
 		var x = obj.offset().left + obj.width() / 2.0;
 		var y = obj.position().top + obj.height() / 2.0;

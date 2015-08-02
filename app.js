@@ -21,12 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var apps = [
-  {title: 'Gravity Sim 3D', id: 'gravitysim3d'},
-  {title: 'Gravity Sim', id: 'gravitysim'},
-  {title: 'Word Link', id: 'wordlink'}
-];
-
 app.use('/', routes);
 
 // catch 404 and forward to error handler
