@@ -1,0 +1,79 @@
+﻿@font-face {
+    font-family: 'open-sans';
+    src: url('../fonts/OpenSans-Bold.ttf');
+}
+
+body {
+	background-color: #3e3f3a;
+	font-family: open-sans, sans-serif;
+}
+
+.navbar-top {
+	position: static;
+	min-height: 30px;
+	margin-bottom: 0;
+}
+
+.navbar ul li a {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.center {
+	margin: 0 auto;
+}
+
+.navbar-logo {
+	height: 50px;
+	width: 50px;
+	float: left;
+}
+
+.navbar-right .input-group {
+	padding-top: 7px;
+	padding-left: 10px;
+}
+
+.navbar-brand {
+	padding: 5px 0;
+}
+
+.navbar-brand span {
+	float: left;
+	line-height: 50px;
+	margin-left: 10px;
+	font-size: 2em;
+	font-family: open-sans, sans-serif;
+}
+
+.badge {
+	margin-left: 0.5em;
+	margin-right: 1em;
+}
+
+.content-wrapper {
+	background-color: #fff;
+	min-height: 500px;
+}
+
+.footer {
+	text-align: center;
+	color: #fff;
+	padding-top: 1em;
+}
+
+.carousel-content {
+}
+
+.carousel-content img {	
+	max-width: 600px;
+	max-height: 400px;
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+	border: 5px solid #333;
+}
+
+#home-carousel {
+	padding-top: 1em;
+}

@@ -1,0 +1,38 @@
+div.navbar.navbar-inverse.navbar-fixed-top.navbar-top
+    div.container
+        div.navbar-header.col-sm-6
+            a.navbar-brand(href='../')
+                img.navbar-logo(src='img/logo.png')
+                span Atom Apps
+        div.nav.navbar-nav.navbar-right.col-sm-6
+            div.input-group
+                input.form-control#search-input(type='text', placeholder='search')
+                span.input-group-btn
+                    button.btn.btn-default#search-button
+                        span.glyphicon.glyphicon-search
+
+div.navbar.navbar-default.navbar-fixed-top.navbar-top
+    div.container
+        div.navbar-header
+            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+        div#navbar-main.navbar-collapse.collapse
+            ul.nav.navbar-nav
+                li
+                    a(href='../') Home
+                li
+                    a.dropdown-toggle(data-toggle='dropdown' href='#') Our Apps
+                        span.badge #{apps.length}
+                        span.caret
+                    ul.dropdown-menu
+                        for app in apps
+                            li
+                                a(href='../apps/' + app.id) #{app.title}
+                        else
+                            li No Apps Yet
+                li
+                    a(href='../about') About
+                li
+                    a(href='../contact') Contact Us
