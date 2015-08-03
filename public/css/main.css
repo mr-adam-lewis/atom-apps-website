@@ -34,11 +34,11 @@ body {
 	padding-left: 10px;
 }
 
-.navbar-brand {
+#navbar-brand {
 	padding: 5px 0;
 }
 
-.navbar-brand span {
+#navbar-brand span {
 	float: left;
 	line-height: 50px;
 	margin-left: 10px;
@@ -65,9 +65,10 @@ body {
 .carousel-content {
 	margin-left: 10px;
 	margin-right: 10px;
+	position: relative;
 }
 
-.carousel-content img {	
+.carousel-content > img {	
 	max-width: 600px;
 	max-height: 400px;
 	width: 100%;
@@ -78,4 +79,22 @@ body {
 
 #home-carousel {
 	padding-top: 1em;
+}
+
+#navbar-main ul li ul li {
+	background-color: #FFF;
+}
+
+#navbar-main ul li ul li:hover {
+	background-color: #EEE;
+}
+
+#navbar-main ul li ul li a {
+	color: #333;
+}
+
+.inner-carousel-item {
+	position: absolute;
+	top: 0;
+	left: 10px;
 }
