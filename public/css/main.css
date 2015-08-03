@@ -52,7 +52,7 @@ body {
 }
 
 .content-wrapper {
-	background-color: #fff;
+	background-color: #f8f8f8;
 	min-height: 500px;
 	padding-bottom: 2em;
 }
@@ -78,7 +78,8 @@ body {
 }
 
 #home-carousel {
-	padding-top: 1em;
+	padding: 2em 0 1em 0;
+	background: #FFF;
 }
 
 #navbar-main ul li ul li {
@@ -109,7 +110,8 @@ body {
 }
 
 .column {
-	background: #EEE;
+	margin-top: 1em;
+	background: #FFF;
 	height: 500px; 
 	padding: 1em;
 }
