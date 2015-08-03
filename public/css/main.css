@@ -54,6 +54,7 @@ body {
 .content-wrapper {
 	background-color: #fff;
 	min-height: 500px;
+	padding-bottom: 2em;
 }
 
 .footer {
@@ -105,4 +106,10 @@ body {
 
 .platform-icons img {
 	height: 2em;
+}
+
+.column {
+	background: #EEE;
+	height: 500px; 
+	padding: 1em;
 }
