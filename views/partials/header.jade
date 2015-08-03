@@ -31,6 +31,13 @@ div.navbar.navbar-default.navbar-fixed-top.navbar-top
                         for app in apps
                             li
                                 a(href='../apps/' + app.id) #{app.title}
+                                    span.platform-icons
+                                        if app.android
+                                            img(src='img/android-icon.png')
+                                        if app.ios
+                                            img(src='img/apple-icon.png')
+                                        if app.windowsphone
+                                            img(src='img/windows-icon.png')
                         else
                             li No Apps Yet
                 li

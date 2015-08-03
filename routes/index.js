@@ -2,9 +2,34 @@ var express = require('express');
 var router = express.Router();
 
 var apps = [
-  {title: 'Gravity Sim 3D', id: 'gravitysim3d'},
-  {title: 'Gravity Sim', id: 'gravitysim'},
-  {title: 'Word Link', id: 'wordlink'}
+  {
+  	title: 'Gravity Sim 3D', 
+  	id: 'gravitysim3d',
+  	android: true,
+  	ios: true,
+  	windowsphone: true
+  },
+  {
+  	title: 'Ball Bounce',
+  	id: 'ballbounce',
+  	android: true,
+  	ios: false,
+  	windowsphone: false
+  },
+  {
+  	title: 'Word Link',
+  	id: 'wordlink',
+  	android: true,
+  	ios: false,
+  	windowsphone: false
+  },
+  {
+  	title: 'Gravity Sim',
+  	id: 'gravitysim',
+  	android: true,
+  	ios: false,
+  	windowsphone: false
+  }
 ];
 
 /* GET home page. */
