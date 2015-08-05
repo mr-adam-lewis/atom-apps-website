@@ -1,0 +1,47 @@
+extends layout
+
+block content
+	div.container
+		div.col-sm-4.hidden-xs
+			div.column.inverse
+				div
+					img.app-profile-icon(src='../img/#{app.id}/icon.png', alt='#{app.title} app icon')
+				div.spacer-lg
+				div.app-profile-inverse-content.white
+					p.center Available for:
+						span.platform-icons
+							if app.android
+								img(src='../img/android-icon.png', alt='android icon')
+							if app.ios
+								img(src='../img/apple-icon.png', alt='apple icon')
+							if app.windowsphone
+								img(src='../img/windows-icon.png', alt='windows icon')
+				div.spacer-lg
+				div.app-profile-user-review.app-profile-inverse-content.dark-grey
+					p.center Average user review:
+					div.star-container
+						if app.reviewstars >= 1
+							img(src='../img/review-star-on.png' alt='review-star')
+						else
+							img(src='../img/review-star-off.png' alt='review-star-empty')
+						if app.reviewstars >= 2
+							img(src='../img/review-star-on.png' alt='review-star')
+						else
+							img(src='../img/review-star-off.png' alt='review-star-empty')
+						if app.reviewstars >= 3
+							img(src='../img/review-star-on.png' alt='review-star')
+						else
+							img(src='../img/review-star-off.png' alt='review-star-empty')
+						if app.reviewstars >= 4
+							img(src='../img/review-star-on.png' alt='review-star')
+						else
+							img(src='../img/review-star-off.png' alt='review-star-empty')
+						if app.reviewstars >= 5
+							img(src='../img/review-star-on.png' alt='review-star')
+						else
+							img(src='../img/review-star-off.png' alt='review-star-empty')
+
+		div.col-sm-8
+			div.column.white
+				img.app-profile-icon-sm.hidden-sm.hidden-md.hidden-lg(src='../img/#{app.id}/icon.png', alt='#{app.title} app icon')
+				h1.app-profile-title #{app.title}

@@ -8,6 +8,47 @@ body {
 	font-family: open-sans, sans-serif;
 }
 
+.spacer-sm {
+	padding-top: 0.2em;
+}
+
+.spacer-md {
+	padding-top: 0.5em;
+}
+
+.spacer-lg {
+	padding-top: 1em;
+}
+
+.spacer-xl {
+	padding-top: 2em;
+}
+
+.center {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.inverse {
+	color: #fff;
+	background-color: #93c54b;
+}
+
+.white {
+	background-color: #FFF;
+	color: #333;
+}
+
+.dark-grey {
+	background-color: #333;
+	color: #fff;	
+}
+
+.column {
+	margin-top: 1em;
+	padding: 1em;
+}
+
 .navbar-top {
 	position: static;
 	min-height: 30px;
@@ -17,10 +58,6 @@ body {
 .navbar ul li a {
 	padding-top: 10px;
 	padding-bottom: 10px;
-}
-
-.center {
-	margin: 0 auto;
 }
 
 .navbar-logo {
@@ -109,9 +146,33 @@ body {
 	height: 2em;
 }
 
-.column {
-	margin-top: 1em;
-	background: #FFF;
-	height: 500px; 
+.app-profile-title {
+	display: inline;
+	line-height: 70px;
+	padding: 0;
+	margin: 0;
+}
+
+.app-profile-icon {
+	width: 100%;
+}
+
+.app-profile-icon-sm {
+	height: 70px;
+	margin: 0 2em 0 0;
+}
+
+.app-profile-inverse-content {
 	padding: 1em;
+	margin: 0;
+}
+
+.app-profile-user-review .star-container {
+	text-align: center;
+	margin-top: 1em;
+}
+
+.app-profile-user-review .star-container img {
+	height: 2em;
+	margin: 0 0.5em;
 }

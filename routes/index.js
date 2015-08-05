@@ -35,21 +35,23 @@ var apps = [
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-	console.log ('working');
-
 	res.render('index', { title: 'Atom Apps - Home', apps: apps });
 
 });
 
 /* GET home page. */
-router.get('/apps', function(req, res, next) {
+router.get('/apps/*', function(req, res, next) {
 
 	var app = {
 		title: 'Gravity Sim 3D',
-
+    id: 'gravitysim3d',
+    android: true,
+    ios: true,
+    windowsphone: true,
+    reviewstars: 4
 	};
 
-	res.render('app', {
+	res.render('app-profile', {
 		title: 'Atom Apps - ' + app.title,
 		apps: apps,
 		app: app
