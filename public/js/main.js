@@ -11,31 +11,29 @@
 		itemsMobile : [479,1],
 		singleItem : false,
 		addClassActive: true,
-		afterMove : updateCarousel
+		autoPlay: 5000
 	});
 
-	updateCarousel();
+	var screenshotsContainer = $('#screenshot-carousel-container');
+
+	var screenshotsCarousel = $('#screenshot-carousel').owlCarousel({
+		navigationText: false,
+		lazyLoad: true,
+		items: 1.5,
+		itemsCustom : false,
+		itemsDesktop : [1199,1.5],
+		itemsDesktopSmall : [980,1.5],
+		itemsTablet: [768,1.5],
+		itemsTabletSmall: false,
+		itemsMobile : [479,1],
+		singleItem : false,
+		addClassActive: true,
+		afterInit: setTimeout(function () {
+			var owlData = screenshotsCarousel.data('owlCarousel');
+			owlData.updateVars();
+			screenshotsContainer.fadeIn(1500);
+		}, 500)
+	});
+
+
 });
-
-function updateCarousel() {
-	var centreX = $(window).width() / 2.0;
-	var maxHeight = $('#home-carousel').height();
-	var centreY = maxHeight / 2.0;
-	var maxDist = centreX;
-	var items = $('#home-carousel .active');
-	$.each(items, function (i, obj) {
-		return; // TODO
-		obj = $(obj);
-		var x = obj.offset().left + obj.width() / 2.0;
-		var y = obj.position().top + obj.height() / 2.0;
-		var dist = Math.abs(x - centreX);
-		var scale = 1.0 - dist / maxDist;
-		var ratio = maxHeight / obj.height();
-		var originalWidth = obj.width() * ratio;
-		var width = scale * originalWidth;
-		var height = scale * maxHeight;
-		x += (obj.width() - width) / 2.0;
-		y += (obj.height() - height) / 2.0;
-		obj.css({top: y, left: x, width: width, height: height});
-	});
-}

@@ -8,6 +8,10 @@ body {
 	font-family: open-sans, sans-serif;
 }
 
+h2 {
+	font-size: 1.5em;
+}
+
 .spacer-sm {
 	padding-top: 0.2em;
 }
@@ -22,6 +26,22 @@ body {
 
 .spacer-xl {
 	padding-top: 2em;
+}
+
+.inline-spacer-sm {
+	padding-left: 0.2em;
+}
+
+.inline-spacer-md {
+	padding-left: 0.5em;
+}
+
+.inline-spacer-lg {
+	padding-left: 1em;
+}
+
+.inline-spacer-xl {
+	padding-left: 2em;
 }
 
 .center {
@@ -106,7 +126,7 @@ body {
 	position: relative;
 }
 
-.carousel-content > img {	
+.carousel-content img {	
 	max-width: 600px;
 	max-height: 400px;
 	width: 100%;
@@ -140,6 +160,7 @@ body {
 .platform-icons {
 	padding-left: 2em;
 	text-align: right;
+	display: inline-block;
 }
 
 .platform-icons img {
@@ -167,6 +188,16 @@ body {
 	margin: 0;
 }
 
+.app-profile-available-for {
+	line-height: 2em;
+	margin: 0;
+	text-align: center;
+}
+
+.app-profile-available-for .platform-icons {
+	padding: 0;
+}
+
 .app-profile-user-review .star-container {
 	text-align: center;
 	margin-top: 1em;
@@ -175,4 +206,13 @@ body {
 .app-profile-user-review .star-container img {
 	height: 2em;
 	margin: 0 0.5em;
+}
+
+#screenshot-carousel-container {
+	display: none;
+}
+
+#screenshot-carousel .carousel-content {
+	border: 1em solid #000;
+	border-radius: 1em;
 }

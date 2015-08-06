@@ -48,7 +48,9 @@ router.get('/apps/*', function(req, res, next) {
     android: true,
     ios: true,
     windowsphone: true,
-    reviewstars: 4
+    reviewstars: 5,
+    description: 'Gravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool game',
+    screenshots: ['screenshot0.jpg', 'screenshot1.jpg', 'screenshot2.jpg', 'screenshot3.jpg', 'screenshot4.jpg', 'screenshot5.jpg']
 	};
 
 	res.render('app-profile', {
