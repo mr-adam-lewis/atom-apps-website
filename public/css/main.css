@@ -1,0 +1,224 @@
+﻿@font-face {
+    font-family: 'open-sans';
+    src: url('../fonts/OpenSans-Bold.ttf');
+}
+
+body {
+	background-color: #3e3f3a;
+	font-family: open-sans, sans-serif;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+.spacer-sm {
+	padding-top: 0.2em;
+}
+
+.spacer-md {
+	padding-top: 0.5em;
+}
+
+.spacer-lg {
+	padding-top: 1em;
+}
+
+.spacer-xl {
+	padding-top: 2em;
+}
+
+.inline-spacer-sm {
+	padding-left: 0.2em;
+}
+
+.inline-spacer-md {
+	padding-left: 0.5em;
+}
+
+.inline-spacer-lg {
+	padding-left: 1em;
+}
+
+.inline-spacer-xl {
+	padding-left: 2em;
+}
+
+.center {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.inverse {
+	color: #fff;
+	background-color: #93c54b;
+}
+
+.white {
+	background-color: #FFF;
+	color: #333;
+}
+
+.dark-grey {
+	background-color: #333;
+	color: #fff;	
+}
+
+.column {
+	margin-top: 1em;
+	padding: 1em;
+}
+
+.navbar-top {
+	position: static;
+	min-height: 30px;
+	margin-bottom: 0;
+}
+
+.navbar ul li a {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.navbar-logo {
+	height: 50px;
+	width: 50px;
+	float: left;
+}
+
+.navbar-right .input-group {
+	padding-top: 7px;
+	padding-left: 10px;
+}
+
+#navbar-brand {
+	padding: 5px 0;
+}
+
+#navbar-brand span {
+	float: left;
+	line-height: 50px;
+	margin-left: 10px;
+	font-size: 2em;
+	font-family: open-sans, sans-serif;
+}
+
+.badge {
+	margin-left: 0.5em;
+	margin-right: 1em;
+}
+
+.content-wrapper {
+	background-color: #f8f8f8;
+	min-height: 500px;
+	padding-bottom: 2em;
+}
+
+.footer {
+	text-align: center;
+	color: #fff;
+	padding-top: 1em;
+}
+
+.carousel-content {
+	margin-left: 10px;
+	margin-right: 10px;
+	position: relative;
+}
+
+.carousel-content img {	
+	max-width: 600px;
+	max-height: 400px;
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+}
+
+#home-carousel {
+	padding: 2em 0 1em 0;
+	background: #FFF;
+}
+
+#navbar-main ul li ul li {
+	background-color: #FFF;
+}
+
+#navbar-main ul li ul li:hover {
+	background-color: #EEE;
+}
+
+#navbar-main ul li ul li a {
+	color: #333;
+}
+
+.inner-carousel-item {
+	position: absolute;
+	top: 0;
+	left: 10px;
+}
+
+.platform-icons {
+	padding-left: 2em;
+	text-align: right;
+	display: inline-block;
+}
+
+.platform-icons img {
+	height: 2em;
+}
+
+.app-profile-title {
+	display: inline;
+	line-height: 70px;
+	padding: 0;
+	margin: 0;
+}
+
+.app-profile-icon {
+	width: 100%;
+}
+
+.app-profile-icon-sm {
+	height: 70px;
+	margin: 0 2em 0 0;
+}
+
+.app-profile-inverse-content {
+	padding: 1em;
+	margin: 0;
+}
+
+.app-profile-available-for {
+	line-height: 2em;
+	margin: 0;
+	text-align: center;
+}
+
+.app-profile-available-for .platform-icons {
+	padding: 0;
+}
+
+.app-profile-user-review .star-container {
+	text-align: center;
+	margin-top: 1em;
+}
+
+.app-profile-user-review .star-container img {
+	height: 2em;
+	margin: 0 0.5em;
+}
+
+#screenshot-carousel-container {
+	display: none;
+}
+
+#screenshot-carousel .carousel-content .screenshot-container {
+	border: 1em solid #000;
+	background-color: #000;
+	border-radius: 1em;
+	display: inline-block;
+}
+
+.carousel-content {
+	text-align: center;
+}
