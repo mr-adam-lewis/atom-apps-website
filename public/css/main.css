@@ -103,6 +103,11 @@ h2 {
 	font-family: open-sans, sans-serif;
 }
 
+.all-apps-btn span {
+  color: inherit !important;
+  color: inherit !important;
+}
+
 .badge {
 	margin-left: 0.5em;
 	margin-right: 1em;
