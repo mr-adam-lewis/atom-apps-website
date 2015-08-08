@@ -28,6 +28,7 @@
 		itemsMobile : [479,1],
 		singleItem : false,
 		addClassActive: true,
+		singleItem: true,
 		afterInit: setTimeout(function () {
 			var owlData = screenshotsCarousel.data('owlCarousel');
 			owlData.updateVars();

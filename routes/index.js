@@ -49,7 +49,7 @@ router.get('/apps/*', function(req, res, next) {
     ios: true,
     windowsphone: true,
     reviewstars: 5,
-    description: 'Gravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool gameGravity sim is a cool game',
+    description: 'Gravity Sim 3D lets you create beautiful little universes that fit in your pocket! <br>Using a realistic model of gravity and an efficient algorithm, Gravity Sim 3D allows you to make huge simulations with numerous bodies. You can also create utterly ridiculous scenarios by locking specific objects in a position. Using black holes and wormholes makes for an interesting time and its really fun too! <br><br>There is currently no universe simulation game that rivals gravity sim on both physical realism and breathtaking beauty.',
     screenshots: ['screenshot0.jpg', 'screenshot1.jpg', 'screenshot2.jpg', 'screenshot3.jpg', 'screenshot4.jpg', 'screenshot5.jpg']
 	};
 

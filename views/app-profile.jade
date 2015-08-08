@@ -53,13 +53,15 @@ block content
 					div.owl-carousel#screenshot-carousel
 						for screenshot in app.screenshots
 							div.carousel-content
-								img(src='../img/#{app.id}/screenshots/#{screenshot}', alt='screenshot')
+								div.screenshot-container
+									img(src='../img/#{app.id}/screenshots/#{screenshot}', alt='screenshot')
 
 				hr
 				
-				p #{app.description}
+				p !{app.description}
 
 				hr
 
 				h2 Additional Information
 
+				

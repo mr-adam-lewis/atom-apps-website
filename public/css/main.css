@@ -212,7 +212,13 @@ h2 {
 	display: none;
 }
 
-#screenshot-carousel .carousel-content {
+#screenshot-carousel .carousel-content .screenshot-container {
 	border: 1em solid #000;
+	background-color: #000;
 	border-radius: 1em;
+	display: inline-block;
+}
+
+.carousel-content {
+	text-align: center;
 }
