@@ -16,25 +16,26 @@
 
 	var screenshotsContainer = $('#screenshot-carousel-container');
 
-	var screenshotsCarousel = $('#screenshot-carousel').owlCarousel({
-		navigationText: false,
-		lazyLoad: true,
-		items: 1.5,
-		itemsCustom : false,
-		itemsDesktop : [1199,1.5],
-		itemsDesktopSmall : [980,1.5],
-		itemsTablet: [768,1.5],
-		itemsTabletSmall: false,
-		itemsMobile : [479,1],
-		singleItem : false,
-		addClassActive: true,
-		singleItem: true,
-		afterInit: setTimeout(function () {
-			var owlData = screenshotsCarousel.data('owlCarousel');
-			owlData.updateVars();
-			screenshotsContainer.fadeIn(1500);
-		}, 500)
-	});
-
+	if (screenshotsContainer) {
+		var screenshotsCarousel = $('#screenshot-carousel').owlCarousel({
+			navigationText: false,
+			lazyLoad: true,
+			items: 1.5,
+			itemsCustom : false,
+			itemsDesktop : [1199,1.5],
+			itemsDesktopSmall : [980,1.5],
+			itemsTablet: [768,1.5],
+			itemsTabletSmall: false,
+			itemsMobile : [479,1],
+			singleItem : false,
+			addClassActive: true,
+			singleItem: true,
+			afterInit: setTimeout(function () {
+				var owlData = screenshotsCarousel.data('owlCarousel');
+				owlData.updateVars();
+				screenshotsContainer.fadeIn(1500);
+			}, 500)
+		});
+	}
 
 });
