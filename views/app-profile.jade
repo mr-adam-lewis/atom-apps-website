@@ -19,7 +19,7 @@ block content
 								img(src='../img/windows-icon.png', alt='windows icon')
 				div.spacer-lg
 				div.app-profile-user-review.app-profile-inverse-content.dark-grey
-					p.center Average user review:
+					p.center Average user review: #{app.reviewExact}
 					div.star-container
 						if app.reviewstars >= 1
 							img(src='../img/review-star-on.png' alt='review-star')
@@ -41,12 +41,15 @@ block content
 							img(src='../img/review-star-on.png' alt='review-star')
 						else
 							img(src='../img/review-star-off.png' alt='review-star-empty')
+				div.spacer-lg
+				a.btn.btn-block.btn-primary(href='../blogs/#{app.id}') View Blog
 
 		div.col-sm-8
 			div.column.white
-				img.app-profile-icon-sm.hidden-sm.hidden-md.hidden-lg(src='../img/#{app.id}/icon.png', alt='#{app.title} app icon')
+				div.app-profile-title
+					img.app-profile-icon-sm.hidden-sm.hidden-md.hidden-lg(src='../img/#{app.id}/icon.png', alt='#{app.title} app icon')
+					h1 #{app.title}
 
-				h1.app-profile-title #{app.title}
 				hr
 
 				div#screenshot-carousel-container
@@ -62,4 +65,47 @@ block content
 
 				hr
 
-				h2 Additional Information
+				h2 Features
+
+				p !{app.features}
+
+				div.hidden-sm.hidden-md.hidden-lg
+					hr
+					h2 Additional Information
+					div.column.inverse
+						div.app-profile-inverse-content.white
+							p.app-profile-available-for Available for:
+								span.inline-spacer-xl
+								span.platform-icons
+									if app.android
+										img(src='../img/android-icon.png', alt='android icon')
+									if app.ios
+										img(src='../img/apple-icon.png', alt='apple icon')
+									if app.windowsphone
+										img(src='../img/windows-icon.png', alt='windows icon')
+						div.spacer-lg
+						div.app-profile-user-review.app-profile-inverse-content.dark-grey
+							p.center Average user review: #{app.reviewExact}
+							div.star-container
+								if app.reviewstars >= 1
+									img(src='../img/review-star-on.png' alt='review-star')
+								else
+									img(src='../img/review-star-off.png' alt='review-star-empty')
+								if app.reviewstars >= 2
+									img(src='../img/review-star-on.png' alt='review-star')
+								else
+									img(src='../img/review-star-off.png' alt='review-star-empty')
+								if app.reviewstars >= 3
+									img(src='../img/review-star-on.png' alt='review-star')
+								else
+									img(src='../img/review-star-off.png' alt='review-star-empty')
+								if app.reviewstars >= 4
+									img(src='../img/review-star-on.png' alt='review-star')
+								else
+									img(src='../img/review-star-off.png' alt='review-star-empty')
+								if app.reviewstars >= 5
+									img(src='../img/review-star-on.png' alt='review-star')
+								else
+									img(src='../img/review-star-off.png' alt='review-star-empty')
+						div.spacer-lg
+						a.btn.btn-block.btn-primary(href='../blogs/#{app.id}') View Blog

@@ -34,7 +34,7 @@
 				var owlData = screenshotsCarousel.data('owlCarousel');
 				owlData.updateVars();
 				screenshotsContainer.fadeIn(1500);
-			}, 500)
+			}, 800)
 		});
 	}
 

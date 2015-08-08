@@ -61,7 +61,7 @@ h2 {
 
 .dark-grey {
 	background-color: #333;
-	color: #fff;	
+	color: #fff;
 }
 
 .column {
@@ -126,7 +126,7 @@ h2 {
 	position: relative;
 }
 
-.carousel-content img {	
+.carousel-content img {
 	max-width: 600px;
 	max-height: 400px;
 	width: 100%;
@@ -168,10 +168,19 @@ h2 {
 }
 
 .app-profile-title {
-	display: inline;
+  height: 70px;
 	line-height: 70px;
 	padding: 0;
 	margin: 0;
+  position: relative;
+}
+
+.app-profile-title h1 {
+  line-height: inherit;
+  display: inline;
+  position: absolute;
+  top: 0;
+  margin: 0;
 }
 
 .app-profile-icon {
