@@ -42,24 +42,39 @@ router.get('/', function(req, res, next) {
 /* GET home page. */
 router.get('/apps/*', function(req, res, next) {
 
-	var app = {
-		title: 'Gravity Sim 3D',
-    id: 'gravitysim3d',
-    android: true,
-    ios: true,
-    windowsphone: true,
-    reviewstars: 5,
-    reviewExact: 4.1 + ' / 5',
-    description: 'Gravity Sim 3D lets you create beautiful little universes that fit in your pocket! <br>Using a realistic model of gravity and an efficient algorithm, Gravity Sim 3D allows you to make huge simulations with numerous bodies. You can also create utterly ridiculous scenarios by locking specific objects in a position. Using black holes and wormholes makes for an interesting time and its really fun too! <br><br>There is currently no universe simulation game that rivals gravity sim on both physical realism and breathtaking beauty.',
-    features: '&bull; Crate your own universe in unlimited space.<br>&bull; Use the force of gravity to bend the universe to your will',
-    screenshots: ['Screenshot0.jpg', 'Screenshot1.jpg', 'Screenshot2.jpg', 'Screenshot3.jpg', 'Screenshot4.jpg', 'Screenshot5.jpg']
-	};
+  var id = req.url.substring(6);
 
-	res.render('app-profile', {
-		title: 'Atom Apps - ' + app.title,
-		apps: apps,
-		app: app
-	});
+  if (id == '' || id == undefined)
+  	res.render('app-list', {
+  		title: 'Atom Apps - All Apps',
+  		apps: apps
+  	});
+  else {
+
+    // Get app data from database with id
+
+  	var app = {
+  		title: 'Gravity Sim 3D',
+      id: 'gravitysim3d',
+      android: true,
+      ios: true,
+      windowsphone: true,
+      reviewstars: 5,
+      reviewExact: 4.1 + ' / 5',
+      description: 'Gravity Sim 3D lets you create beautiful little universes that fit in your pocket! <br>Using a realistic model of gravity and an efficient algorithm, Gravity Sim 3D allows you to make huge simulations with numerous bodies. You can also create utterly ridiculous scenarios by locking specific objects in a position. Using black holes and wormholes makes for an interesting time and its really fun too! <br><br>There is currently no universe simulation game that rivals gravity sim on both physical realism and breathtaking beauty.',
+      features: '&bull; Crate your own universe in unlimited space.<br>&bull; Use the force of gravity to bend the universe to your will',
+      screenshots: ['Screenshot0.jpg', 'Screenshot1.jpg', 'Screenshot2.jpg', 'Screenshot3.jpg', 'Screenshot4.jpg', 'Screenshot5.jpg'],
+      googlePlayLink: '',
+      appStoreLink: '',
+      windowsStoreLink: ''
+  	};
+
+  	res.render('app-profile', {
+  		title: 'Atom Apps - ' + app.title,
+  		apps: apps,
+  		app: app
+  	});
+  }
 
 });
 

@@ -69,6 +69,8 @@ block content
 
 				p !{app.features}
 
+				hr
+
 				div.hidden-sm.hidden-md.hidden-lg
 					hr
 					h2 Additional Information
@@ -109,3 +111,19 @@ block content
 									img(src='../img/review-star-off.png' alt='review-star-empty')
 						div.spacer-lg
 						a.btn.btn-block.btn-primary(href='../blogs/#{app.id}') View Blog
+
+				h2 Download Links
+
+				div.col-sm-4.column
+					a.app-badge(href='#{app.googlePlayLink}')
+						img(src='../img/google-play-badge.png')
+
+				div.col-sm-4.column
+					a.app-badge(href='#{app.appStoreLink}')
+						img(src='../img/app-store-badge.png')
+
+				div.col-sm-4.column
+					a.app-badge(href='#{app.windowsStoreLink}')
+						img(src='../img/windows-store-badge.png')
+
+				br.clear

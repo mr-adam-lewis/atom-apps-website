@@ -7,9 +7,18 @@ body {
 	background-color: #3e3f3a;
 	font-family: open-sans, sans-serif;
 }
+@media screen and (max-width: 750px) {
+  h1 {
+    font-size: 1.5em;
+  }
+}
 
 h2 {
-	font-size: 1.5em;
+	font-size: 1.2em;
+}
+
+.clear {
+  clear: both;
 }
 
 .spacer-sm {
@@ -108,7 +117,7 @@ h2 {
   color: inherit !important;
 }
 
-.badge {
+#app-count-badge {
 	margin-left: 0.5em;
 	margin-right: 1em;
 }
@@ -173,8 +182,8 @@ h2 {
 }
 
 .app-profile-title {
-  height: 70px;
-	line-height: 70px;
+  height: 50px;
+	line-height: 50px;
 	padding: 0;
 	margin: 0;
   position: relative;
@@ -186,6 +195,7 @@ h2 {
   position: absolute;
   top: 0;
   margin: 0;
+  padding: 0;
 }
 
 .app-profile-icon {
@@ -193,8 +203,8 @@ h2 {
 }
 
 .app-profile-icon-sm {
-	height: 70px;
-	margin: 0 2em 0 0;
+	height: 50px;
+	margin: 0 1em 0 0;
 }
 
 .app-profile-inverse-content {
@@ -235,4 +245,42 @@ h2 {
 
 .carousel-content {
 	text-align: center;
+}
+
+.app-badge {
+  text-align: center;
+  width: 100%;
+}
+
+.app-badge img {
+  width: 90%;
+  max-width: 200px;
+}
+
+.app-list-app {
+  margin: 0;
+  padding: 1em;
+  background: #f8f8f8;
+  border-radius: 0.5em;
+}
+
+.app-list-app a {
+  text-align: center;
+  width: 100%;
+  display: block;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.app-list-app a:hover {
+  color: #555;
+}
+
+.app-list-icon-container {
+  text-align: center;
+}
+
+.app-list-icon-container img {
+  width: 90%;
+  max-width: 200px;
 }
