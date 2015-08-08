@@ -16,7 +16,7 @@
 
 	var screenshotsContainer = $('#screenshot-carousel-container');
 
-	if (screenshotsContainer) {
+	if (screenshotsContainer != undefined) {
 		var screenshotsCarousel = $('#screenshot-carousel').owlCarousel({
 			navigationText: false,
 			lazyLoad: true,
