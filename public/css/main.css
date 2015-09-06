@@ -323,3 +323,7 @@ h2 {
 .inline-checkbox {
   display: inline-block;
 }
+
+.app-list-table-icon {
+  height: 3em;
+}

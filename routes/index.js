@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require ('mongoose');
+var multer = require ('multer');
+var upload = multer({ dest: 'uploads/' });
 
 // Set up database connection
 var uristring =
@@ -21,7 +23,10 @@ mongoose.connect(uristring, function (err, res) {
 // Define app schema
 var appSchema = new mongoose.Schema({
       title: String,
-      id: String,
+      id: {
+        type: String,
+        index: { unique: true }
+      },
       review: {
         type: Number, min: 0, max: 5
       },
@@ -72,17 +77,31 @@ router.get('/apps/*', function(req, res, next) {
 
 });
 
+// The upload object
+var upload = upload.fields([{ name: 'icon', maxCount: 1 }, { name: 'screenshot', maxCount: 20 }]);
+
 // Get the app edit form page
 router.get ('/app-edit', checkAuth, function (req, res) {
   res.render ('app-edit');
 });
 
+// Get the delete app request
+router.get('/delete-app/:id', checkAuth, function (req, res) {
+  var id = req.params.id;
+  console.log (id);
+  App.find ({id: id}).remove ().exec ();
+  res.redirect ('/app-edit');
+});
+
 // Get the added app
-router.post('/add-app', checkAuth, function (req, res) {
+router.post('/add-app', checkAuth, upload, function (req, res) {
+  console.log ('Receiving add-app form data.');
+
   var post = req.body;
 
   // Get posted variables
-  var id = post.title.replace (' ', '').toLowerCase();
+  var re = new RegExp(' ', 'g');
+  var id = post.title.replace (re, '').toLowerCase();
   var screenshotCount = post.screenshotCount;
 
   // Declare the new server path
@@ -93,6 +112,13 @@ router.post('/add-app', checkAuth, function (req, res) {
 
   // Create folder in public/img for app
   fs.mkdir (serverPath);
+  fs.mkdir (serverPath + '/screenshots');
+
+  // Copy app icon
+  fs.rename (
+    req.files.icon[0].path,
+    serverPath + '/icon' + path.extname(req.files.icon[0].originalname)
+  );
 
   // Construct new app
   var app = new App;
@@ -109,28 +135,19 @@ router.post('/add-app', checkAuth, function (req, res) {
   app.screenshots = [];
 
   // For all screenshots, copy to correct location
-  for (int i=0; i<screenshotCount; i++) {
-    var name = 'screenshot' + i + path.extname(req.files['screenshot' + i].path)
+  for (var i=0; i<req.files.screenshot.length; i++) {
+    var name = 'screenshot' + i + path.extname(req.files.screenshot[i].originalname);
+    console.log (name);
     app.screenshots.push (name);
     fs.rename (
-      req.files['screenshot' + i].path,
-      serverPath + '/screenshots/' + name,
-      function(error) {
-        if(error) {
-      		res.send({
-            error: 'Upload failed'
-		      });
-          return;
-        }
-
-        res.send({
-          path: serverPath
-        });
-      }
+      req.files.screenshot[i].path,
+      serverPath + '/screenshots/' + name
     );
   }
 
   app.save ();
+
+  res.redirect ('/app-edit');
 
 });
 

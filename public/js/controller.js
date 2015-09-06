@@ -27,7 +27,7 @@ $(function () {
     var fileField = document.createElement ('input');
     $(fileField).addClass ('form-control file-field')
       .attr ('type', 'file')
-      .attr ('name', 'screenshot' + fileFields.length)
+      .attr ('name', 'screenshot')
       .attr ('accept', 'image/*');
 
     fileFields.push (fileField);
@@ -48,7 +48,7 @@ $(function () {
 
       // Resort field names
       for (var i=0; i<fileFields.length; i++) {
-        $(fileFields[i]).attr ('name', 'screenshot' + i);
+        $(fileFields[i]).attr ('name', 'screenshot');
       }
 
       // Set the screenshot count field value
@@ -231,30 +231,37 @@ function PopulateAdminAppList () {
 
         // Create name cell
         var nameCell = $(document.createElement ('td'))
-          .append (results[i].title);
+          .append (response[i].title);
+
+        // Create id cell
+        var idCell = $(document.createElement ('td'))
+          .append ('/' + response[i].id);
 
         // Create options cell
         var optionsCell = $(document.createElement ('td'));
 
         // Create the view button
         var viewButton = $(document.createElement ('a'))
-          .addClass ('btn btn-success')
+          .addClass ('btn btn-sm btn-success')
           .attr('href', '../apps/' + response[i].id)
           .append ('View');
 
         // Create the edit button
         var editButton = $(document.createElement ('a'))
-          .addClass ('btn btn-info')
+          .addClass ('btn btn-sm btn-info')
           .append ('Edit');
 
         // Create the delete button
         var deleteButton = $(document.createElement ('a'))
-          .addClass ('btn btn-danger')
+          .addClass ('btn btn-sm btn-danger')
+          .attr ('href', '../delete-app/' + response[i].id)
           .append ('Delete');
 
         // Append buttons to cell
         optionsCell.append (viewButton);
+        optionsCell.append ($(document.createElement ('span')).addClass ('inline-spacer-lg'));
         optionsCell.append (editButton);
+        optionsCell.append ($(document.createElement ('span')).addClass ('inline-spacer-lg'));
         optionsCell.append (deleteButton);
 
         // Append icon to cell
@@ -263,6 +270,7 @@ function PopulateAdminAppList () {
         // Append cells to row
         row.append (iconCell);
         row.append (nameCell);
+        row.append (idCell);
         row.append (optionsCell);
 
         // Append row to table
@@ -277,25 +285,56 @@ function PopulateAdminAppList () {
  */
 function AddApp () {
 
-  // Submit form
-  $('#add-app-form').ajaxSubmit({
+  var error = ValidateAddAppForm ();
 
-    // Handle error
-    error: function(xhr) {
-		  Alert('Error: ' + xhr.status);
-    },
+  if (error == '') {
+    console.log ('Sending add-app form data.');
+    return true;
+  } else {
+    $('#add-app-error').append (
+      $(document.createElement ('div'))
+        .addClass ('alert alert-dismissible alert-danger')
+        .append (
+          $(document.createElement ('button'))
+            .addClass ('close')
+            .attr ('data-dismiss', 'alert')
+            .attr ('type', 'button')
+            .append ('x'))
+        .append (error)
+    );
+    return false;
+  }
+}
 
-    // Handle success
-    success: function(response) {
-      if (response.path)
-        alert("App added successfully");
-      else if (response.error)
-        alert (response.error);
+/**
+ * Validates the add app form
+ */
+function ValidateAddAppForm () {
+  var error = '';
+
+  var screenshotCount = $('#screenshotCount').val();
+  for (var i=0; i<screenshotCount; i++) {
+    if ($('#screenshot' + i).val () == '') {
+      error += 'Please make sure all screenshots have been selected.<br>';
+      break;
     }
+  }
 
-	});
+  if ($('#add-app-icon-field').val() == '')
+    error += 'Please select an app icon.<br>';
 
-	// Have to stop the form from submitting and causing
-	// a page refresh - don't forget this
-	return false;
+  if ($('#add-app-title').val () == '')
+    error += 'Please give the app a title.<br>';
+
+  if ($('#add-app-description').val () == '')
+    error += 'Please give an app description.<br>';
+
+  if ($('#add-app-features').val () == '')
+    error += 'Please give some app features.<br>';
+
+  if ($('#add-app-review').val () == '')
+    error += 'Please give the app average review.<br>';
+
+  return error;
+
 }

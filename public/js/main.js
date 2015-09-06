@@ -1,4 +1,9 @@
 ﻿$(function () {
+
+	if ($('#app-profile-icon').length) {
+		
+	}
+
 	var owl = $('#home-carousel').owlCarousel({
 		navigationText: false,
 		lazyLoad: true,
