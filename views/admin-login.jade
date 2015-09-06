@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	div.container
+		if failed
+			div.spacer-lg
+			div.alert.alert-dismissible.alert-danger
+				button.close(type='button', data-dismiss='alert') x
+				p Log in failed! Pease check your username/password and try again.
+		div.col-lg-4.col-lg-offset-4.spacer-lg
+			h1.center Admin Log-In
+			div.spacer-lg
+			form.well.center.light-grey(method='post', action='login')
+				p.left Username:
+				input.form-control(type='text', name='username')
+				p.spacer-lg.left Password:
+				input.form-control(type='password', name='password')
+				div.spacer-lg
+				input.btn.btn-info(type='submit', value='Log In')

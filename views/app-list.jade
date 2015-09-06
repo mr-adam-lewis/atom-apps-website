@@ -2,22 +2,6 @@ extends layout
 
 block content
 	div.container
-		div.column.white
+		div.column.white#app-full-list
 			h1 All Apps
 			hr
-			-var i=0;
-			for app in apps
-				div.col-sm-3.col-xs-6.spacer-lg
-					div.app-list-app
-						a(href='#{app.id}')
-							div.app-list-icon-container
-								img(src='../img/#{app.id}/icon.png' alt='#{app.title} icon')
-							h4 #{app.title}
-				-i++;
-				if (i%2 == 0)
-					div.clear.hidden-sm.hidden-md.hidden-lg
-				if (i%4 == 0)
-					div.clear.hidden-xs
-			else
-				div.alert.alert-info
-					p No apps have been added to the website yet, please try again later.

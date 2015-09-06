@@ -58,6 +58,16 @@ h2 {
 	text-align: center;
 }
 
+.left {
+  text-align: left;
+  width: 100%;
+}
+
+.right {
+  text-align: right;
+  width: 100%;
+}
+
 .inverse {
 	color: #fff;
 	background-color: #93c54b;
@@ -71,6 +81,11 @@ h2 {
 .dark-grey {
 	background-color: #333;
 	color: #fff;
+}
+
+.light-grey {
+  background-color: #EEEEEF;
+  color: #333;
 }
 
 .column {
@@ -283,4 +298,28 @@ h2 {
 .app-list-icon-container img {
   width: 90%;
   max-width: 200px;
+}
+
+.file-field-outer {
+  margin-top: 0.5em;
+  width: 100%;
+  position:  relative;
+}
+
+.file-field {
+  width: inherit;
+}
+
+.remove-screenshot-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#app-icon-upload {
+  height: 200px;
+}
+
+.inline-checkbox {
+  display: inline-block;
 }
