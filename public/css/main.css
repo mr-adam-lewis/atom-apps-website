@@ -188,12 +188,13 @@ h2 {
 
 .platform-icons {
 	padding-left: 2em;
-	text-align: right;
+	text-align: center;
 	display: inline-block;
 }
 
 .platform-icons img {
 	height: 2em;
+  margin-right: 1em;
 }
 
 .app-profile-title {
@@ -326,4 +327,24 @@ h2 {
 
 .app-list-table-icon {
   height: 3em;
+}
+
+.admin-padded-icon {
+  max-width: 200px;
+}
+
+.admin-edit-screenshot-container {
+  position: relative;
+}
+
+.screenshot-remove-button-container {
+  position: absolute;
+  bottom: -10px;
+  text-align:  center;
+  width: 100%;
+  left: 0;
+}
+
+.admin-edit-screenshot-thumb {
+  width: 100%;
 }

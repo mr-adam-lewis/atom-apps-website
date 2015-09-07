@@ -10,64 +10,33 @@ block content
 				div.app-profile-inverse-content.white
 					p.app-profile-available-for Available for:
 						span.inline-spacer-xl
-						span.platform-icons
-							if app.android
-								img(src='../img/android-icon.png', alt='android icon')
-							if app.ios
-								img(src='../img/apple-icon.png', alt='apple icon')
-							if app.windowsphone
-								img(src='../img/windows-icon.png', alt='windows icon')
+						span.platform-icons#app-profile-platform-icons
 				div.spacer-lg
 				div.app-profile-user-review.app-profile-inverse-content.dark-grey
-					p.center Average user review: #{app.reviewExact}
-					div.star-container
-						if app.reviewstars >= 1
-							img(src='../img/review-star-on.png' alt='review-star')
-						else
-							img(src='../img/review-star-off.png' alt='review-star-empty')
-						if app.reviewstars >= 2
-							img(src='../img/review-star-on.png' alt='review-star')
-						else
-							img(src='../img/review-star-off.png' alt='review-star-empty')
-						if app.reviewstars >= 3
-							img(src='../img/review-star-on.png' alt='review-star')
-						else
-							img(src='../img/review-star-off.png' alt='review-star-empty')
-						if app.reviewstars >= 4
-							img(src='../img/review-star-on.png' alt='review-star')
-						else
-							img(src='../img/review-star-off.png' alt='review-star-empty')
-						if app.reviewstars >= 5
-							img(src='../img/review-star-on.png' alt='review-star')
-						else
-							img(src='../img/review-star-off.png' alt='review-star-empty')
+					p.center#app-profile-exact-review Average user review:
+					div.star-container#app-profile-star-container
 				div.spacer-lg
-				a.btn.btn-block.btn-primary(href='../blogs/#{app.id}') View Blog
 
 		div.col-sm-8
 			div.column.white
 				div.app-profile-title
-					img.app-profile-icon-sm.hidden-sm.hidden-md.hidden-lg(src='../img/#{app.id}/icon.png', alt='#{app.title} app icon')
-					h1 #{app.title}
+					img.app-profile-icon-sm.hidden-sm.hidden-md.hidden-lg#app-profile-icon-small
+					h1#app-profile-title
 
 				hr
 
 				div#screenshot-carousel-container
 					div.owl-carousel#screenshot-carousel
-						for screenshot in app.screenshots
-							div.carousel-content
-								div.screenshot-container
-									img(src='../img/#{app.id}/screenshots/#{screenshot}', alt='screenshot')
 
 				hr
 
-				p !{app.description}
+				p#app-profile-description
 
 				hr
 
 				h2 Features
 
-				p !{app.features}
+				p#app-profile-features
 
 				hr
 
@@ -78,52 +47,33 @@ block content
 						div.app-profile-inverse-content.white
 							p.app-profile-available-for Available for:
 								span.inline-spacer-xl
-								span.platform-icons
-									if app.android
-										img(src='../img/android-icon.png', alt='android icon')
-									if app.ios
-										img(src='../img/apple-icon.png', alt='apple icon')
-									if app.windowsphone
-										img(src='../img/windows-icon.png', alt='windows icon')
+								span.platform-icons#app-profile-platform-icons-alt
 						div.spacer-lg
 						div.app-profile-user-review.app-profile-inverse-content.dark-grey
-							p.center Average user review: #{app.reviewExact}
-							div.star-container
-								if app.reviewstars >= 1
-									img(src='../img/review-star-on.png' alt='review-star')
-								else
-									img(src='../img/review-star-off.png' alt='review-star-empty')
-								if app.reviewstars >= 2
-									img(src='../img/review-star-on.png' alt='review-star')
-								else
-									img(src='../img/review-star-off.png' alt='review-star-empty')
-								if app.reviewstars >= 3
-									img(src='../img/review-star-on.png' alt='review-star')
-								else
-									img(src='../img/review-star-off.png' alt='review-star-empty')
-								if app.reviewstars >= 4
-									img(src='../img/review-star-on.png' alt='review-star')
-								else
-									img(src='../img/review-star-off.png' alt='review-star-empty')
-								if app.reviewstars >= 5
-									img(src='../img/review-star-on.png' alt='review-star')
-								else
-									img(src='../img/review-star-off.png' alt='review-star-empty')
+							p.center#app-profile-exact-review-alt Average user review:
+							div.star-container#app-profile-star-container-alt
 						div.spacer-lg
-						a.btn.btn-block.btn-primary(href='../blogs/#{app.id}') View Blog
 
 				h2 Download Links
 
-				div.col-sm-4.column
-					a.app-badge(href='#{app.googlePlayLink}')
+				div.col-xs-6.col-sm-6.col-md-4.col-lg-4.spacer-md
+					a.app-badge.hidden#app-profile-google-play-link
 						img(src='../img/google-play-badge.png')
 
-				div.col-sm-4.column
-					a.app-badge(href='#{app.appStoreLink}')
+				div.col-xs-6.col-sm-6.col-md-4.col-lg-4.spacer-md
+					a.app-badge.hidden#app-profile-app-store-link
 						img(src='../img/app-store-badge.png')
 
-				div.col-sm-4.column
-					a.app-badge(href='#{app.windowsStoreLink}')
+				div.col-xs-6.col-sm-6.col-md-4.col-lg-4.spacer-md
+					a.app-badge.hidden#app-profile-windows-store-link
 						img(src='../img/windows-store-badge.png')
+
+				div.col-xs-6.col-sm-6.col-md-4.col-lg-4.spacer-md
+					a.app-badge.hidden#app-profile-amazon-store-link
+						img(src='../img/amazon-store-badge.png')
+
+				div.col-xs-6.col-sm-6.col-md-4.col-lg-4.spacer-md
+					a.app-badge.hidden#app-profile-steam-store-link
+						img(src='../img/steam-store-badge.png')
 
 				br.clear
