@@ -289,7 +289,7 @@ router.get ('/login', function (req, res) {
 router.post ('/login', function (req, res) {
   var post = req.body;
   if ((post.username === 'mr_adam_lewis@sky.com' && post.password === '55C4W23j?')
-      || (post.username === 'tomvardy.home@googlemail.com' && post.password = '70Mv4rDy')) {
+      || (post.username === 'tomvardy.home@googlemail.com' && post.password === '70Mv4rDy')) {
     req.session.user_id = 'a5256addfe4166ba20fbe81274accafcee24b0107ccaf84e64590acdc9e8e0c1';
     res.redirect('../admin-app-list');
   } else {
