@@ -3,9 +3,14 @@ extends layout
 block content
 	div.owl-carousel#home-carousel
 	div.container
-		div.col-sm-4
+		div.col-sm-6
 			div.column
-				p Twitter Feed
-		div.col-sm-8
+				a.twitter-timeline(href='https://twitter.com/atomappsuk', data-widget-id='642830681924628480') Tweets by @atomappsuk
+					script !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+		div.col-sm-6
 			div.column
-				p Articles and shiz
+				div#fb-root
+					div.fb-page(data-href='https://www.facebook.com/434211463429359', data-height='600', data-width='520', data-small-header='false', data-adapt-container-width='true', data-hide-cover='false', data-show-facepile='true', data-show-posts='true')
+						div.fb-xfbml-parse-ignore
+							blockquote(cite='https://www.facebook.com/434211463429359')
+								a(href='https://www.facebook.com/434211463429359') Atom Apps

@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	div.spacer-lg
+	div.container
+		div.col-sm-6
+			div.column.light-grey
+				h3 Email Address:
+				p Send an email to us at the following address and we will aim to respond within a day.
+				img(src='../img/email.png', alt='Contact Email')
+			div.column.light-grey
+				h3 Twitter Messsage:
+				p Send a private message to our #[a(href='https://twitter.com/atomappsuk', target='_blank') Twitter] page for a quick response.
+				a.twitter-timeline(href='https://twitter.com/atomappsuk', data-widget-id='642830681924628480') Tweets by @atomappsuk
+					script !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+		div.col-sm-6
+			div.column.light-grey
+				h3 Facebook Message:
+				p Send a private message to our #[a(href='https://www.facebook.com/Atom-Apps-434211463429359/timeline/', target='_blank') Facebook] page for a quick response.
+				div.column
+					div#fb-root
+						div.fb-page(data-href='https://www.facebook.com/434211463429359', data-height='600', data-width='520', data-small-header='false', data-adapt-container-width='true', data-hide-cover='false', data-show-facepile='true', data-show-posts='true')
+							div.fb-xfbml-parse-ignore
+								blockquote(cite='https://www.facebook.com/434211463429359')
+									a(href='https://www.facebook.com/434211463429359') Atom Apps

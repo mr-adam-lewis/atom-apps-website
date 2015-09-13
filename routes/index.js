@@ -37,7 +37,7 @@ var appSchema = new mongoose.Schema({
       googlePlayLink: String,
       appStoreLink: String,
       windowsStoreLink: String,
-      amazonStoreLink: String,
+      amazonLink: String,
       steamLink: String
     });
 
@@ -154,8 +154,8 @@ router.post('/add-app', checkAuth, upload, function (req, res) {
   app.windowsStoreLink = post.windowsStoreLink;
   app.amazonLink = post.amazonLink;
   app.steamLink = post.steamLink;
-  app.description = post.description;
-  app.features = post.features;
+  app.description = post.description.replace (/(?:\r\n|\r|\n)/g, '<br>');
+  app.features = post.features.replace (/(?:\r\n|\r|\n)/g, '<br>');
   app.screenshots = [];
 
   if (req.files.carousel !== undefined)
@@ -164,14 +164,15 @@ router.post('/add-app', checkAuth, upload, function (req, res) {
     app.carousel = '';
 
   // For all screenshots, copy to correct location
-  for (var i=0; i<req.files.screenshot.length; i++) {
-    var name = 'screenshot' + i + path.extname(req.files.screenshot[i].originalname);
-    app.screenshots.push (name);
-    fs.rename (
-      req.files.screenshot[i].path,
-      serverPath + '/screenshots/' + name
-    );
-  }
+  if (req.files.screenshot != undefined)
+    for (var i=0; i<req.files.screenshot.length; i++) {
+      var name = 'screenshot' + GenerateRandomString(10) + path.extname(req.files.screenshot[i].originalname);
+      app.screenshots.push (name);
+      fs.rename (
+        req.files.screenshot[i].path,
+        serverPath + '/screenshots/' + name
+      );
+    }
 
   app.save ();
 
@@ -183,7 +184,12 @@ router.post('/add-app', checkAuth, upload, function (req, res) {
 router.post ('/edit-app', checkAuth, upload, function (req, res) {
   console.log ('Receiving edit-app form data.');
 
-  var id = req.body.id;
+  var post = req.body;
+
+  // Get posted variables
+  var re = new RegExp(' ', 'g');
+  var id = post.id;
+
   var removedScreenshots = [];
   if (req.body.removeScreenshots != undefined)
     removedScreenshots = req.body.removeScreenshots.split(',');
@@ -196,15 +202,10 @@ router.post ('/edit-app', checkAuth, upload, function (req, res) {
       if (keepScreenshots[i] == removedScreenshots[j]) {
         keepScreenshots.splice (i, 1);
         i--;
-        break;
       }
   }
 
-  var post = req.body;
-
   // Get posted variables
-  var re = new RegExp(' ', 'g');
-  var id = post.title.replace (re, '').toLowerCase();
   var screenshotCount = post.screenshotCount;
 
   // Declare the new server path
@@ -220,54 +221,53 @@ router.post ('/edit-app', checkAuth, upload, function (req, res) {
     fs.mkdir (serverPath + '/screenshots');
 
   for (var i=0; i<removedScreenshots.length; i++)
-    fs.unlinkSync (serverPath + '/screenshots/' + removedScreenshots[i]);
+    if (fs.existsSync (serverPath + '/screenshots/' + removedScreenshots[i])
+      && !fs.lstatSync (serverPath + '/screenshots/' + removedScreenshots[i]).isDirectory())
+      fs.unlinkSync (serverPath + '/screenshots/' + removedScreenshots[i]);
 
   // Copy app icon
-  if (req.files.icon[0] !== undefined)
+  if (req.files.icon !== undefined)
     fs.rename (
       req.files.icon[0].path,
       serverPath + '/icon' + path.extname(req.files.icon[0].originalname)
     );
 
+  var carousel = undefined;
   // Copy carousel image
-  if (req.files.carousel !== undefined)
+  if (req.files.carousel !== undefined) {
+    carousel = 'carousel' + path.extname (req.files.carousel[0].originalname);
     fs.rename (
       req.files.carousel[0].path,
       serverPath + '/carousel' + path.extname(req.files.carousel[0].originalname)
     );
-
-  // Construct new app
-  var app = new App;
-  app.title = post.title;
-  app.id = id;
-  app.review = parseFloat(post.review);
-  app.googlePlayLink = post.googlePlayLink;
-  app.appStoreLink = post.appStoreLink;
-  app.windowsStoreLink = post.windowsStoreLink;
-  app.amazonLink = post.amazonLink;
-  app.steamLink = post.steamLink;
-  app.description = post.description;
-  app.features = post.features;
-  app.screenshots = [];
-
-  if (req.files.carousel !== undefined)
-    app.carousel = 'carousel' + path.extname (req.files.carousel[0].originalname);
-  else
-    app.carousel = '';
-
-  // For all screenshots, copy to correct location
-  for (var i=0; i<req.files.screenshot.length; i++) {
-    var name = 'screenshot' + i + path.extname(req.files.screenshot[i].originalname);
-    app.screenshots.push (name);
-    fs.rename (
-      req.files.screenshot[i].path,
-      serverPath + '/screenshots/' + name
-    );
   }
 
-  app.screenshots = app.screenshots.concat (keepScreenshots);
+  // For all screenshots, copy to correct location
+  if (req.files.screenshot !== undefined)
+    for (var i=0; i<req.files.screenshot.length; i++) {
+      var name = 'screenshot' + GenerateRandomString(10) + path.extname(req.files.screenshot[i].originalname);
+      keepScreenshots.push (name);
+      fs.rename (
+        req.files.screenshot[i].path,
+        serverPath + '/screenshots/' + name
+      );
+    }
 
-  app.save ();
+  App.findOne({id: id}, function (error, app) {
+    app.review = parseFloat(post.review);
+    app.googlePlayLink = post.googlePlayLink;
+    app.appStoreLink = post.appStoreLink;
+    app.windowsStoreLink = post.windowsStoreLink;
+    app.amazonLink = post.amazonLink;
+    app.steamLink = post.steamLink;
+    app.description = post.description.replace (/(?:\r\n|\r|\n)/g, '<br>');
+    app.features = post.features.replace (/(?:\r\n|\r|\n)/g, '<br>');
+    app.screenshots = keepScreenshots;
+    app.carousel = carousel;
+    app.save ();
+  });
+
+  res.redirect ('/admin-app-list');
 
 });
 
@@ -290,7 +290,7 @@ router.post ('/login', function (req, res) {
   var post = req.body;
   if (post.username === 'mr_adam_lewis@sky.com' && post.password === '55C4W23j?') {
     req.session.user_id = 'a5256addfe4166ba20fbe81274accafcee24b0107ccaf84e64590acdc9e8e0c1';
-    res.redirect('/admin-app-list');
+    res.redirect('../admin-app-list');
   } else {
     res.render ('admin-login', {failed: true});
   }
@@ -299,7 +299,22 @@ router.post ('/login', function (req, res) {
 // Log out
 router.get ('/logout', function (req, res) {
   delete req.session.user_id;
-  res.redirect('/login');
+  res.redirect('../login');
+});
+
+// Coming Soon Page
+router.get('/coming-soon', function (req, res) {
+  res.render ('coming-soon', {title: 'Atom Apps - Coming Soon'});
+});
+
+// About Page
+router.get('/about', function (req, res) {
+  res.render ('about', {title: 'Atom Apps - About'});
+});
+
+// Contact Page
+router.get('/contact', function (req, res) {
+  res.render ('contact', {title: 'Atom Apps - Contact'});
 });
 
 /**
@@ -330,6 +345,18 @@ function DeleteFolderRecursive (path) {
     });
     fs.rmdirSync(path);
   }
+}
+
+/**
+ * Generates a random string of the given length
+ * @param length the length of the string to generate
+ */
+function GenerateRandomString (length) {
+  var alphanum = 'abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var str = '';
+  for (var i=0; i<length; i++)
+    str += alphanum.charAt (Math.floor (Math.random () * alphanum.length));
+  return str;
 }
 
 module.exports = router;

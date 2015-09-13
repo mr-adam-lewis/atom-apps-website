@@ -3,13 +3,14 @@ extends admin-console
 block admin
 	script(src='../js/admin-edit-app.js')
 	div.spacer-lg#edit-app-error
-	form.form-horizontal#edit-app-form(enctype='multipart/form-data', method='post', action='edit-app')
+	form.form-horizontal#edit-app-form(enctype='multipart/form-data', method='post', action='../edit-app')
 		div.container
 			div.col-sm-12
 				div.col-sm-12
 					h3 App title
 				div.col-sm-10
 					input.form-control#edit-app-title(type='text', disabled='', name='title')
+					input.form-control.hidden#edit-app-id(type='hidden', name='id')
 				div.col-sm-2
 					input.btn.btn-block.btn-info(type='submit', value='Submit App')
 			div.col-sm-12
@@ -32,9 +33,9 @@ block admin
 				div.col-sm-8
 					div.column.light-grey
 						label.control-label Description
-						textarea.form-control#edit-app-description(name='description')
+						textarea.form-control#edit-app-description(name='description', rows='12')
 						label.control-label Features
-						textarea.form-control#edit-app-features(name='features')
+						textarea.form-control#edit-app-features(name='features', rows='10')
 						label.control-label Screenshots
 						div.well.dark-grey#file-field-container
 							a.btn.btn-success#add-screenshot-button Add Screenshot

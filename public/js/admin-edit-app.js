@@ -16,6 +16,8 @@ $(function () {
 
       $('#edit-app-title').val (response.title);
 
+      $('#edit-app-id').val (response.id);
+
       $('#app-profile-icon')
         .attr ('src', '../img/' + id + '/icon.png')
         .attr ('alt', response.title + ' icon');
@@ -35,9 +37,9 @@ $(function () {
         $('#windowsStoreLink').removeAttr ('disabled').val (response.windowsStoreLink);
       }
 
-      if (response.amazonStoreLink !== undefined) {
+      if (response.amazonLink !== undefined) {
         $('#amazonStoreToggle').attr ('checked', 'checked');
-        $('#amazonStoreLink').removeAttr ('disabled').val (response.amazonStoreLink);
+        $('#amazonLink').removeAttr ('disabled').val (response.amazonLink);
       }
 
       if (response.steamLink !== undefined) {
@@ -50,11 +52,13 @@ $(function () {
       $('#edit-app-features').val (response.features.replace (regex, '\n'));
       $('#edit-app-review').val (response.review);
 
+      var editKeepScreenshots = '';
+
       for (var i=0; i<response.screenshots.length; i++) {
-        if ($('#edit-keep-screenshots').val () == '')
-          $('#edit-keep-screenshots').val ($('edit-keep-screenshots').val () + response.screenshots[i]);
+        if (editKeepScreenshots == '')
+          editKeepScreenshots += response.screenshots[i];
         else
-          $('#edit-keep-screenshots').val ($('edit-keep-screenshots').val () + ',' + response.screenshots[i]);
+          editKeepScreenshots += ',' + response.screenshots[i];
         $('#edit-app-screenshot-container').prepend (
           $(document.createElement ('div'))
             .addClass ('col-xs-4 admin-edit-screenshot-container')
@@ -74,9 +78,7 @@ $(function () {
                     .click (function () {
                       $(this).parent ().parent ().remove ();
                       var data = $(this).attr ('data-screenshot-name');
-                      if ($('#edit-remove-screenshots').val () == '')
-                        data = $('#edit-remove-screenshots').val () + data;
-                      else
+                      if ($('#edit-remove-screenshots').val () != '')
                         data = $('#edit-remove-screenshots').val () + ',' + data
                       $('#edit-remove-screenshots').val (data);
                     })
@@ -84,6 +86,8 @@ $(function () {
             )
         );
       }
+
+      $('#edit-keep-screenshots').val (editKeepScreenshots);
 
     }
   });

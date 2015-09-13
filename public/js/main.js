@@ -25,35 +25,35 @@
 					.attr ('src', '../img/' + id + '/icon.png')
 					.attr ('alt', response.title + ' icon');
 
-				if (response.googlePlayLink != '')
+				if (response.googlePlayLink != undefined)
 					$('#app-profile-platform-icons, #app-profile-platform-icons-alt')
 						.append ($(document.createElement ('img'))
 							.attr ('src', '../img/android-icon.png')
 							.attr ('alt', 'android icon')
 						);
 
-				if (response.appStoreLink != '')
+				if (response.appStoreLink != undefined)
 					$('#app-profile-platform-icons, #app-profile-platform-icons-alt')
 						.append ($(document.createElement ('img'))
 							.attr ('src', '../img/apple-icon.png')
 							.attr ('alt', 'apple icon')
 						);
 
-				if (response.windowsStoreLink != '')
+				if (response.windowsStoreLink != undefined)
 					$('#app-profile-platform-icons, #app-profile-platform-icons-alt')
 						.append ($(document.createElement ('img'))
 							.attr ('src', '../img/windows-icon.png')
 							.attr ('alt', 'windows icon')
 						);
 
-				if (response.amazonLink != '')
+				if (response.amazonLink != undefined)
 					$('#app-profile-platform-icons, #app-profile-platform-icons-alt')
 						.append ($(document.createElement ('img'))
 							.attr ('src', '../img/amazon-icon.png')
 							.attr ('alt', 'amazon icon')
 						);
 
-				if (response.steamLink != '')
+				if (response.steamLink != undefined)
 					$('#app-profile-platform-icons, #app-profile-platform-icons-alt')
 						.append ($(document.createElement ('img'))
 							.attr ('src', '../img/steam-icon.png')
@@ -96,30 +96,35 @@
 
 				$('#app-profile-features').append (response.features);
 
-				if (response.googlePlayLink != '')
+				if (response.googlePlayLink != undefined)
 					$('#app-profile-google-play-link')
 						.removeClass ('hidden')
-						.attr ('href', response.googlePlayLink);
+						.attr ('href', response.googlePlayLink)
+            .attr ('target', '_blank');
 
-				if (response.appStoreLink != '')
+				if (response.appStoreLink != undefined)
 					$('#app-profile-app-store-link')
 						.removeClass ('hidden')
-						.attr ('href', response.googlePlayLink);
+						.attr ('href', response.appStoreLink)
+            .attr ('target', '_blank');
 
-				if (response.windowsStoreLink != '')
+				if (response.windowsStoreLink != undefined)
 					$('#app-profile-windows-store-link')
 						.removeClass ('hidden')
-						.attr ('href', response.googlePlayLink);
+						.attr ('href', response.windowsStoreLink)
+            .attr ('target', '_blank');
 
-				if (response.amazonLink != '')
+				if (response.amazonLink != undefined)
 					$('#app-profile-amazon-store-link')
 						.removeClass ('hidden')
-						.attr ('href', response.amazonLink);
+						.attr ('href', response.amazonLink)
+            .attr ('target', '_blank');
 
-				if (response.steamLink != '')
+				if (response.steamLink != undefined)
 					$('#app-profile-steam-store-link')
 						.removeClass ('hidden')
-						.attr ('href', response.steamLink);
+						.attr ('href', response.steamLink)
+            .attr ('target', '_blank');
 
 				for (var i=0; i<response.screenshots.length; i++)
 					$('#screenshot-carousel').append (
@@ -171,7 +176,8 @@
 		url: '../all-apps',
 		success: function (response, status, jqXHR) {
 			for (var i=0; i<response.length; i++) {
-				if (response[i].carousel == '')
+				if (response[i].carousel == undefined
+          || response[i].carousel == '')
 					continue;
 				$('#home-carousel').append (
 					$(document.createElement ('div'))
@@ -192,8 +198,8 @@
 				lazyLoad: true,
 				items: 3,
 				itemsCustom : false,
-				itemsDesktop : [1199,3],
-				itemsDesktopSmall : [980,3],
+				itemsDesktop : [1199,2],
+				itemsDesktopSmall : [980,2],
 				itemsTablet: [768,2],
 				itemsTabletSmall: false,
 				itemsMobile : [479,1],
@@ -281,6 +287,17 @@ function PopulateAppFullList () {
       // For each app in the response, add it to the menu
       for (var i=0; i<response.length; i++) {
 
+        if (i%2 == 0)
+          $('#app-full-list').append (
+            $(document.createElement ('div'))
+              .addClass ('clear hidden-sm hidden-md hidden-lg')
+          );
+        if (i%4 == 0)
+          $('#app-full-list').append (
+            $(document.createElement ('div'))
+              .addClass ('clear hidden-xs')
+          );
+
         // Create the container
         var container = $(document.createElement ('div'))
           .addClass ('col-sm-3 col-xs-6 spacer-lg');
@@ -315,18 +332,12 @@ function PopulateAppFullList () {
 
         // Add to the list
         $('#app-full-list').append (container);
-
-        if (i%2 == 0)
-          $('#app-full-list').append (
-            $(document.createElement ('div'))
-              .addClass ('clear hidden-sm hidden-md hidden-lg')
-          );
-        if (i%4 == 0)
-          $('#app-full-list').append (
-            $(document.createElement ('div'))
-              .addClass ('clear hidden-xs')
-          );
       }
+
+      $('#app-full-list').append (
+        $(document.createElement ('div'))
+          .addClass ('clear')
+      );
 
       // If no apps have been added
       if (response.length == 0) {
