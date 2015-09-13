@@ -236,29 +236,49 @@ function PopulateAppsListDropdown () {
         // Add the title
         anchor.append (response[i].title);
 
+        var platforms = $(document.createElement ('span')).addClass ('platform-icons');
+
         // Add the android icon
-        if (response[i].android) {
+        if (response[i].googlePlayLink != undefined) {
           // Create the icon
           var icon = $(document.createElement ('img'));
-          icon.attr ('href', '../img/android-icon.png');
-          anchor.append (icon);
+          icon.attr ('src', '../img/android-icon.png');
+          platforms.append (icon);
         }
 
         // Add the iOS icon
-        if (response[i].ios) {
+        if (response[i].appStoreLink != undefined) {
           // Create the icon
           var icon = $(document.createElement ('img'));
-          icon.attr ('href', '../img/apple-icon.png');
-          anchor.append (icon);
+          icon.attr ('src', '../img/apple-icon.png');
+          platforms.append (icon);
         }
 
         // Add the windows phone icon
-        if (response[i].windowsphone) {
+        if (response[i].windowsStoreLink != undefined) {
           // Create the icon
           var icon = $(document.createElement ('img'));
-          icon.attr ('href', '../img/windows-icon.png');
-          anchor.append (icon);
+          icon.attr ('src', '../img/windows-icon.png');
+          platforms.append (icon);
         }
+
+        // Add the amazon apps icon
+        if (response[i].amazonLink != undefined) {
+          // Create the icon
+          var icon = $(document.createElement ('img'));
+          icon.attr ('src', '../img/amazon-icon.png');
+          platforms.append (icon);
+        }
+
+        // Add the steam icon
+        if (response[i].steamLink != undefined) {
+          // Create the icon
+          var icon = $(document.createElement ('img'));
+          icon.attr ('src', '../img/steam-icon.png');
+          platforms.append (icon);
+        }
+
+        anchor.append (platforms);
 
         // Add the anchor to the list item
         listItem.append (anchor);
