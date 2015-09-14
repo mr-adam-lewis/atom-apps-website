@@ -1,0 +1,24 @@
+extends admin-console
+
+block admin
+	script(src='../js/admin-add-coming-soon.js')
+	div.spacer-lg#add-post-error
+	form.form-horizontal#add-coming-soon-form(enctype='multipart/form-data', method='post', action='add-coming-soon')
+		div.container
+			div.col-sm-12
+				div.col-sm-12
+					h3 Post Title
+				div.col-sm-10
+					input.form-control#add-post-title(type='text', name='title')
+				div.col-sm-2
+					input.btn.btn-block.btn-info(type='submit', value='Submit Post')
+			div.col-sm-12
+				div.col-sm-4
+					div.column.inverse
+						div#edit-app-icon-container
+							label.control-label Post Image
+							input.form-control#add-post-icon(type='file', name='icon', accept='image/*')
+				div.col-sm-8
+					div.column.light-grey
+						label.control-label Content
+						textarea.form-control#add-post-content(name='content', rows='12')

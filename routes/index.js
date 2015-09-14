@@ -51,6 +51,20 @@ var appSchema = new mongoose.Schema({
 // Define the schema in mongoose and get the model
 var App = mongoose.model ('app', appSchema);
 
+// Define coming soon schema
+var comingSoonSchema = new mongoose.Schema({
+      id: {
+        type: String,
+        index: {unique: true}
+      },
+      title: String,
+      icon: String,
+      content: String
+    });
+
+// Define the schema in mongoose and get the model
+var ComingSoon = mongoose.model ('comingsoon', comingSoonSchema);
+
 // Get json list of all apps
 router.get('/all-apps', function (req, res) {
     // Get top 10 apps
@@ -124,8 +138,9 @@ router.get('/delete-app/:id', checkAuth, function (req, res) {
         cloud.uploader.destroy (path.basename(app.screenshots[i]), function (result) {
           console.log (result);
         });
-  }).remove ().exec ();
-  res.redirect ('/admin-app-list');
+  }).remove ().exec (function (error, result) {
+    res.redirect ('/admin-app-list');
+  });
 });
 
 // Get the added app
@@ -152,6 +167,7 @@ router.post('/add-app', checkAuth, upload, function (req, res) {
       App.findOne ({id: id}, function (error, app) {
         app.icon = result.url;
         app.save ();
+        res.redirect ('/admin-app-list');
       });
     });
   }
@@ -197,8 +213,6 @@ router.post('/add-app', checkAuth, upload, function (req, res) {
         });
       });
     }
-
-  res.redirect ('/admin-app-list');
 
 });
 
@@ -305,6 +319,88 @@ router.post ('/edit-app', checkAuth, upload, function (req, res) {
 
   res.redirect ('/admin-app-list');
 
+});
+
+// Get all coming soon posts
+router.get ('/all-coming-soon', function (req, res) {
+  ComingSoon.find ().exec (function (error, response) {
+    console.log (response);
+    res.json (response);
+  });
+});
+
+// Get coming soon post with given id
+router.get ('/coming-soon/:id', function (req, res) {
+  ComingSoon.findOne ({id: req.params.id}).exec (function (error, result) {
+    res.json (result);
+  });
+});
+
+// Delete a coming soon post
+router.get ('/delete-coming-soon/:id', checkAuth, function (req, res) {
+  var path = require ('path');
+  ComingSoon.find ({id: req.params.id}).exec (function (error, result) {
+    cloud.uploader.destroy (path.basename (result.icon), function (response) {
+      ComingSoon.find ({id: req.params.id}).remove ().exec (function (error, result) {
+        res.redirect ('/admin-coming-soon-list');
+      });
+    });
+  });
+});
+
+// Add coming soon
+router.post ('/add-coming-soon', checkAuth, upload, function (req, res) {
+  var id = GenerateRandomString (32);
+  var post = new ComingSoon;
+  post.id = id;
+  post.title = req.body.title;
+  post.content = req.body.content.replace (/(?:\r\n|\r|\n)/g, '<br>');
+  post.save ();
+
+  if (req.files.icon != undefined)
+    cloud.uploader.upload (req.files.icon[0].path, function (result) {
+      post.icon = result.url;
+      post.save ();
+      res.redirect ('/admin-coming-soon-list');
+    });
+});
+
+// Edit coming soon
+router.post ('/edit-coming-soon', checkAuth, upload, function (req, res) {
+  var path = require ('path');
+  ComingSoon.findOne ({id: req.body.id}).exec (function (error, post) {
+    post.title = req.body.title;
+    post.content = req.body.content.replace (/(?:\r\n|\r|\n)/g, '<br>');
+    post.save ();
+
+    if (req.files.icon != undefined) {
+      ComingSoon.findOne ({id: req.body.id}).exec (function (error, post) {
+        cloud.uploader.destroy (path.basename (post.icon), function (result) {
+          cloud.uploader.upload (req.files.icon[0].path, function (result) {
+            post.icon = result.url;
+            post.save ();
+            res.redirect ('/admin-coming-soon-list');
+          });
+        });
+      });
+    } else
+      res.redirect ('/admin-coming-soon-list');
+  });
+});
+
+// Get coming soon list
+router.get ('/admin-coming-soon-list', checkAuth, function (req, res) {
+  res.render ('admin-coming-soon-list', {title: 'Atom Apps - Coming Soon'});
+});
+
+// Get coming soon list
+router.get ('/admin-add-coming-soon', checkAuth, function (req, res) {
+  res.render ('admin-add-coming-soon', {title: 'Atom Apps - Coming Soon'});
+});
+
+router.get ('/admin-edit-coming-soon/:id', checkAuth, function (req, res) {
+    var id = req.params.id;
+    res.render ('admin-edit-coming-soon', {title: 'Atom Apps - '});
 });
 
 // Get the admin edit page

@@ -210,6 +210,50 @@
 		}
 	});
 
+  if ($('#coming-soon-posts').length) {
+		console.log ("Requesting coming soon json");
+		var id = location.pathname.split("/");
+		id = id[id.length - 1];
+	  $.ajax ({
+	    accepts: 'application/json; charset=utf-8',
+	    method: 'GET',
+	    url: '../all-coming-soon',
+	    success: function (response, status, jqXHR) {
+	      console.log ("Receiving coming soon json");
+        for (var i=0; i<response.length; i++)
+          $('#coming-soon-posts').append (
+            $(document.createElement ('div'))
+              .addClass ('column light-grey')
+              .append (
+                $(document.createElement ('div'))
+                  .addClass ('col-xs-3')
+                  .append (
+                    $(document.createElement ('img'))
+                      .addClass ('app-profile-icon')
+                      .attr ('src', response[i].icon)
+                      .attr ('alt', response[i].title + ' Image')
+                  )
+              )
+              .append (
+                $(document.createElement ('div'))
+                  .addClass ('col-xs-9')
+                  .append (
+                    $(document.createElement ('h3'))
+                      .append (response[i].title)
+                  )
+                  .append (
+                    $(document.createElement ('p'))
+                      .append (response[i].content)
+                  )
+              ).append (
+                $(document.createElement ('div'))
+                  .addClass ('clear')
+              )
+          );
+      }
+    });
+  }
+
 });
 
 

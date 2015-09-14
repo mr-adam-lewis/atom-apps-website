@@ -1,0 +1,12 @@
+extends admin-console
+
+block admin
+	script(src='../js/admin-coming-soon-list.js')
+	div.spacer-lg
+	table.table.table-striped.table-hover
+		thead
+			tr
+				th(width="100")
+				th Heading
+				th(width="250") Options
+		tbody#coming-soon-list-table-body
