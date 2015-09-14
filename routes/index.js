@@ -3,6 +3,12 @@ var router = express.Router();
 var mongoose = require ('mongoose');
 var multer = require ('multer');
 var upload = multer({ dest: 'uploads/' });
+var cloud = require ('cloudinary');
+cloud.config({
+  cloud_name: 'atomapps',
+  api_key: '131742154875364',
+  api_secret: 'VlMlGUihmEp0I07MSzPD7tvUjEU'
+});
 
 // Set up database connection
 var uristring =
@@ -30,10 +36,11 @@ var appSchema = new mongoose.Schema({
       review: {
         type: Number, min: 0, max: 5
       },
+      icon: String,
+      carousel: String,
+      screenshots: [String],
       description: String,
       features: String,
-      screenshots: [String],
-      carousel: String,
       googlePlayLink: String,
       appStoreLink: String,
       windowsStoreLink: String,
@@ -103,8 +110,21 @@ router.get ('/admin-add-app', checkAuth, function (req, res) {
 router.get('/delete-app/:id', checkAuth, function (req, res) {
   var id = req.params.id;
   console.log ('Deleting app with id ' + id);
-  App.find ({id: id}).remove ().exec ();
-  DeleteFolderRecursive (process.env.PWD + '/public/img/' + id);
+  App.find ({id: id}, function (error, app) {
+    if (app.icon != undefined)
+      cloud.uploader.destroy (path.basename(app.icon), function (result) {
+        console.log (result);
+      });
+    if (app.carousel != undefined)
+      cloud.uploader.destroy (path.basename(app.carousel), function (result) {
+        console.log (result);
+      });
+    if (app.screenshots != undefined)
+      for (var i=0; i<app.screenshots.length; i++)
+        cloud.uploader.destroy (path.basename(app.screenshots[i]), function (result) {
+          console.log (result);
+        });
+  }).remove ().exec ();
   res.redirect ('/admin-app-list');
 });
 
@@ -122,27 +142,30 @@ router.post('/add-app', checkAuth, upload, function (req, res) {
   // Declare the new server path
   var serverPath = process.env.PWD + '/public/img/' + id;
 
-  var fs = require ('fs');
   var path = require ('path');
+  var fs = require ('fs');
 
-  // Create folder in public/img for app
-  if (!fs.existsSync(serverPath))
-    fs.mkdir (serverPath);
-  if (!fs.existsSync (serverPath + '/screenshots'))
-    fs.mkdir (serverPath + '/screenshots');
+  if (req.files.icon != undefined) {
+    var name = req.files.icon[0].path;
+    // Upload file to cloud
+    cloud.uploader.upload(name, function(result) {
+      App.findOne ({id: id}, function (error, app) {
+        app.icon = result.url;
+        app.save ();
+      });
+    });
+  }
 
-  // Copy app icon
-  fs.rename (
-    req.files.icon[0].path,
-    serverPath + '/icon' + path.extname(req.files.icon[0].originalname)
-  );
-
-  // Copy carousel image
-  if (req.files.carousel !== undefined)
-    fs.rename (
-      req.files.carousel[0].path,
-      serverPath + '/carousel' + path.extname(req.files.carousel[0].originalname)
-    );
+  if (req.files.carousel != undefined) {
+    var name = req.files.carousel[0].path;
+    // Upload file to cloud
+    cloud.uploader.upload(name, function(result) {
+      App.findOne ({id: id}, function (error, app) {
+        app.carousel = result.url;
+        app.save ();
+      });
+    });
+  }
 
   // Construct new app
   var app = new App;
@@ -156,25 +179,24 @@ router.post('/add-app', checkAuth, upload, function (req, res) {
   app.steamLink = post.steamLink;
   app.description = post.description.replace (/(?:\r\n|\r|\n)/g, '<br>');
   app.features = post.features.replace (/(?:\r\n|\r|\n)/g, '<br>');
-  app.screenshots = [];
-
-  if (req.files.carousel !== undefined)
-    app.carousel = 'carousel' + path.extname (req.files.carousel[0].originalname);
-  else
-    app.carousel = '';
+  // Save new app
+  app.save ();
 
   // For all screenshots, copy to correct location
   if (req.files.screenshot != undefined)
     for (var i=0; i<req.files.screenshot.length; i++) {
-      var name = 'screenshot' + GenerateRandomString(10) + path.extname(req.files.screenshot[i].originalname);
-      app.screenshots.push (name);
-      fs.rename (
-        req.files.screenshot[i].path,
-        serverPath + '/screenshots/' + name
-      );
+      var name = req.files.screenshot[i].path;
+      // Upload file to cloud
+      cloud.uploader.upload(name, function(result) {
+        App.findOne ({id: id}, function (error, app) {
+          if (app.screenshots == undefined)
+            app.screenshots = [result.url];
+          else
+            app.screenshots.push(result.url);
+          app.save ();
+        });
+      });
     }
-
-  app.save ();
 
   res.redirect ('/admin-app-list');
 
@@ -208,50 +230,48 @@ router.post ('/edit-app', checkAuth, upload, function (req, res) {
   // Get posted variables
   var screenshotCount = post.screenshotCount;
 
-  // Declare the new server path
-  var serverPath = process.env.PWD + '/public/img/' + id;
-
   var fs = require ('fs');
   var path = require ('path');
 
-  // Create folder in public/img for app
-  if (!fs.existsSync(serverPath))
-    fs.mkdir (serverPath);
-  if (!fs.existsSync (serverPath + '/screenshots'))
-    fs.mkdir (serverPath + '/screenshots');
-
   for (var i=0; i<removedScreenshots.length; i++)
-    if (fs.existsSync (serverPath + '/screenshots/' + removedScreenshots[i])
-      && !fs.lstatSync (serverPath + '/screenshots/' + removedScreenshots[i]).isDirectory())
-      fs.unlinkSync (serverPath + '/screenshots/' + removedScreenshots[i]);
+    cloud.uploader.destroy (path.basename(removedScreenshots[i]), function (result) {
+      console.log ("removing screenshot - " + result);
+    });
 
-  // Copy app icon
-  if (req.files.icon !== undefined)
-    fs.rename (
-      req.files.icon[0].path,
-      serverPath + '/icon' + path.extname(req.files.icon[0].originalname)
-    );
+  if (req.files.icon != undefined) {
+    var name = req.files.icon[0].path;
 
-  var carousel = undefined;
-  // Copy carousel image
-  if (req.files.carousel !== undefined) {
-    carousel = 'carousel' + path.extname (req.files.carousel[0].originalname);
-    fs.rename (
-      req.files.carousel[0].path,
-      serverPath + '/carousel' + path.extname(req.files.carousel[0].originalname)
-    );
+    App.findOne ({id: id}, function (error, app) {
+      cloud.uploader.destroy (path.basename(app.icon), function (result) {
+        console.log ("removing icon - " + result);
+
+        // Upload file to cloud
+        cloud.uploader.upload(name, function(result) {
+          App.findOne ({id: id}, function (error, app) {
+            app.icon = result.url;
+            app.save ();
+          });
+        });
+
+      });
+    });
   }
 
-  // For all screenshots, copy to correct location
-  if (req.files.screenshot !== undefined)
-    for (var i=0; i<req.files.screenshot.length; i++) {
-      var name = 'screenshot' + GenerateRandomString(10) + path.extname(req.files.screenshot[i].originalname);
-      keepScreenshots.push (name);
-      fs.rename (
-        req.files.screenshot[i].path,
-        serverPath + '/screenshots/' + name
-      );
-    }
+  if (req.files.carousel != undefined) {
+    var name = req.files.carousel[0].path;
+
+    App.findOne ({id: id}, function (error, app) {
+      cloud.uploader.destroy (path.basename(app.carousel), function (result) {
+        // Upload file to cloud
+        cloud.uploader.upload(name, function(result) {
+          App.findOne ({id: id}, function (error, app) {
+            app.carousel = result.url;
+            app.save ();
+          });
+        });
+      });
+    });
+  }
 
   App.findOne({id: id}, function (error, app) {
     app.review = parseFloat(post.review);
@@ -263,8 +283,24 @@ router.post ('/edit-app', checkAuth, upload, function (req, res) {
     app.description = post.description.replace (/(?:\r\n|\r|\n)/g, '<br>');
     app.features = post.features.replace (/(?:\r\n|\r|\n)/g, '<br>');
     app.screenshots = keepScreenshots;
-    app.carousel = carousel;
     app.save ();
+
+    // For all screenshots, copy to correct location
+    if (req.files.screenshot !== undefined)
+      for (var i=0; i<req.files.screenshot.length; i++) {
+          var name = req.files.screenshot[i].path;
+
+          // Upload file to cloud
+          cloud.uploader.upload(name, function(result) {
+            App.findOne ({id: id}, function (error, app) {
+              if (app.screenshots == undefined)
+                app.screenshots = [result.url];
+              else
+                app.screenshots.push(result.url);
+              app.save ();
+            });
+          });
+      }
   });
 
   res.redirect ('/admin-app-list');
@@ -326,25 +362,6 @@ function checkAuth(req, res, next) {
     res.render ('admin-login', {title: 'Atom Apps - Login', failed: true})
   } else {
     next();
-  }
-}
-
-/**
- * Deletes a folder and its contents
- */
-function DeleteFolderRecursive (path) {
-  var fs = require ('fs');
-  console.log (path);
-  if(fs.existsSync(path)) {
-    fs.readdirSync(path).forEach(function(file,index){
-      var curPath = path + "/" + file;
-      if(fs.lstatSync(curPath).isDirectory()) { // recurse
-        DeleteFolderRecursive(curPath);
-      } else { // delete file
-        fs.unlinkSync(curPath);
-      }
-    });
-    fs.rmdirSync(path);
   }
 }
 

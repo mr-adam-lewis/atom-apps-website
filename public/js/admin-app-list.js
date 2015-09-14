@@ -23,7 +23,7 @@ function PopulateAdminAppList () {
         // Create icon
         var icon = $(document.createElement ('img'))
           .addClass ('app-list-table-icon')
-          .attr ('src', '../img/' + response[i].id + '/icon.png')
+          .attr ('src', response[i].icon)
           .attr ('alt', response[i].title + ' icon')
 
         // Create name cell

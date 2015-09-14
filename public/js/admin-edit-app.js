@@ -19,7 +19,7 @@ $(function () {
       $('#edit-app-id').val (response.id);
 
       $('#app-profile-icon')
-        .attr ('src', '../img/' + id + '/icon.png')
+        .attr ('src', response.icon)
         .attr ('alt', response.title + ' icon');
 
       if (response.googlePlayLink !== undefined) {
@@ -64,7 +64,7 @@ $(function () {
             .addClass ('col-xs-4 admin-edit-screenshot-container')
             .append (
               $(document.createElement ('img'))
-                .attr ('src', '../img/' + response.id + '/screenshots/' + response.screenshots[i])
+                .attr ('src', response.screenshots[i])
                 .attr ('alt', 'screenshot')
                 .addClass ('admin-edit-screenshot-thumb')
             ).append (

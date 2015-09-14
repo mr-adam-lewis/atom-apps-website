@@ -18,11 +18,11 @@
 				document.title += ' ' + response.title;
 
 				$('#app-profile-icon')
-					.attr ('src', '../img/' + id + '/icon.png')
+					.attr ('src', response.icon)
 					.attr ('alt', response.title + ' icon');
 
 				$('#app-profile-icon-small')
-					.attr ('src', '../img/' + id + '/icon.png')
+					.attr ('src', response.icon)
 					.attr ('alt', response.title + ' icon');
 
 				if (response.googlePlayLink != undefined)
@@ -135,7 +135,7 @@
 									.addClass ('screenshot-container')
 									.append (
 										$(document.createElement ('img'))
-											.attr ('src', '../img/' + id + '/screenshots/' + response.screenshots[i])
+											.attr ('src', response.screenshots[i])
 											.attr ('alt', 'screenshot')
 									)
 							)
@@ -187,7 +187,7 @@
 								.attr ('href', 'apps/' + response[i].id)
 								.append (
 									$(document.createElement ('img'))
-										.attr ('src', 'img/' + response[i].id + '/' + response[i].carousel)
+										.attr ('src', response[i].carousel)
 								)
 						)
 				);
@@ -336,7 +336,7 @@ function PopulateAppFullList () {
 
         // Create the icon
         var icon = $(document.createElement ('img'))
-          .attr ('src', '../img/' + response[i].id + '/icon.png')
+          .attr ('src', response[i].icon)
           .attr ('alt', response[i].title + ' icon');
 
         // Create the title
