@@ -450,6 +450,11 @@ router.get('/contact', function (req, res) {
   res.render ('contact', {title: 'Atom Apps - Contact'});
 });
 
+// Privacy policy for farmyardpairs
+router.get ('/privacy/farmyardpairs', function (req, res) {
+  res.download ('public/doc/farmyardpairsprivacypolicy.pdf');
+});
+
 /**
  * Checks the authorization of the user
  */
